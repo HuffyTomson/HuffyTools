@@ -1,11 +1,4 @@
 
-// total time for questions
-// in minutes
-App Timer = 8
-
-// arduino port
-ComPort = COM5 
-
 // debug UI
 // true
 // false

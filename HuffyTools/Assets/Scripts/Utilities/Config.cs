@@ -8,7 +8,6 @@ namespace Huffy.Utilities
 {
     public enum CONFIG_KEYS
     {
-        comport,
         vsync,
         pixellightcount,
         aa,
@@ -18,7 +17,6 @@ namespace Huffy.Utilities
         screenheight,
         fullscreen,
         refreshrate,
-        apptimer,
         debug,
     }
 
@@ -118,8 +116,7 @@ namespace Huffy.Utilities
             s += "////////////////////////////////////////////////////////////////////////////////\n";
             s += "// QualitySettings: //\n";
             s += "////////////////////////////////////////////////////////////////////////////////\n";
-
-            s += "\nComPort: " + Read(CONFIG_KEYS.comport);
+            
             s += "\nvSyncCount: " + QualitySettings.vSyncCount;
             s += "\npixelLightCount: " + QualitySettings.pixelLightCount;
             s += "\nantiAliasing: " + QualitySettings.antiAliasing;
