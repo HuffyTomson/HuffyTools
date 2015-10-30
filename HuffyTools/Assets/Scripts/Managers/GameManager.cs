@@ -4,10 +4,9 @@ using Huffy.Utilities;
 
 public class GameManager : MonoBehaviour
 {
-    StateMachine sm;
-    State stateOne;
-    State stateTwo;
-
+    public int id = 0;
+    private StateMachine<GameManager> sm;
+    
     IEnumerator Start ()
     {
         VersionNumber.Initialize();
@@ -16,9 +15,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.125f);
         Container.Load("Container").PrintString();
 
-        stateOne = new State(UpdateOne, EnterOne, ExitOne);
-        stateTwo = new State(UpdateTwo, EnterTwo, ExitTwo);
-        sm = new StateMachine(stateOne);
+        sm = new StateMachine<GameManager>(new TestStateOne(this));
     }
 
     void Update()
@@ -26,33 +23,5 @@ public class GameManager : MonoBehaviour
         if (sm != null)
             sm.Update();
     }
-
-    void UpdateOne()
-    {
-        if (Input.GetKeyDown("2"))
-            sm.ChangeState(stateTwo);
-    }
-
-    void UpdateTwo()
-    {
-        if (Input.GetKeyDown("1"))
-            sm.ChangeState(stateOne);
-    }
-
-    void EnterOne()
-    {
-        Debug.Log("EnterOne");
-    }
-    void ExitOne()
-    {
-        Debug.Log("ExitOne");
-    }
-    void EnterTwo()
-    {
-        Debug.Log("EnterTwo");
-    }
-    void ExitTwo()
-    {
-        Debug.Log("ExitTwo");
-    }
+    
 }

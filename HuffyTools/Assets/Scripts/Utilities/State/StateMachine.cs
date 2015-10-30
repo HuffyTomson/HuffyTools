@@ -1,31 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class StateMachine
+public class StateMachine<T>
 {
-    private State currentState;
-    private State previousState;
+    private State<T> currentState;
+    private State<T> previousState;
 
-    public StateMachine(State _startState)
+    public StateMachine(State<T> _startState)
     {
         ChangeState(_startState);
     }
 
-    public void ChangeState(State _nextState)
+    public void ChangeState(State<T> _nextState)
     {
         if(currentState != null)
         {
-            if (currentState.Exit != null)
-                currentState.Exit();
+            currentState.Exit();
         }
 
         previousState = currentState;
         currentState = _nextState;
-
+        
         if(currentState != null)
         {
-            if (currentState.Enter != null)
-                currentState.Enter();
+            currentState.sm = this;
+            currentState.Enter();
         }
     }
 
@@ -38,8 +37,7 @@ public class StateMachine
     {
         if (currentState != null)
         {
-            if (currentState.Update != null)
-                currentState.Update();
+            currentState.Update();
         }
     }
 }

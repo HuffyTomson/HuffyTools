@@ -2,21 +2,17 @@
 using System.Collections;
 using System;
 
-public class State
+public abstract class State<T>
 {
-    Action update;
-    Action enter;
-    Action exit;
+    public T owner;
+    public StateMachine<T> sm;
 
-    public Action Update { get { return update; } }
-    public Action Enter { get { return enter; } }
-    public Action Exit { get { return exit; } }
-
-    public State(Action _update, Action _enter = null, Action _exit = null)
+    public State(T _owner)
     {
-        update = _update;
-        enter = _enter;
-        exit = _exit;
+        owner = _owner;
     }
-    
+
+    abstract public void Update();
+    abstract public void Enter();
+    abstract public void Exit();
 }
