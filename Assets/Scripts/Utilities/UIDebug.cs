@@ -6,8 +6,9 @@ namespace Huffy.Utilities
 {
     public class UIDebug : SingletonBehaviour<UIDebug>
     {
-        public static bool useDebugLog = true;
-        public static bool useUIDebug = false;
+        public static bool useUIDebug = true;
+        public bool useStackTrace = true;
+        public float logTime = 8;
 
         public Color color = Color.white;
         private string printString = "";
@@ -16,39 +17,59 @@ namespace Huffy.Utilities
         void Awake()
         {
             DontDestroy();
-#if !UNITY_EDITOR
-            useUIDebug = false;
-#endif
+            if (Config.HasKey(CONFIG_KEYS.debug))
+            {
+                useUIDebug = bool.Parse(Config.Read(CONFIG_KEYS.debug));
+            }
         }
 
-        public static void Log(string _message)
+        void OnEnable()
         {
-            if (useDebugLog)
-                Debug.Log(_message);
+            Application.logMessageReceived += Log;
+        }
+        void OnDisable()
+        {
+            Application.logMessageReceived -= Log;
+        }
 
-            Instance.StartCoroutine(Instance.AddPrint(_message));
+        void Log(string _message, string stackTrace, LogType type)
+        {
+            string logString = _message;
+
+            if (useStackTrace)
+            {
+                logString = "<b><size=14>" + _message + "</size></b>" + "\n<i><size=12>" + type + "\n" + stackTrace + "</size></i>";
+            }
+
+            StartCoroutine(Instance.AddPrint(logString));
         }
 
         IEnumerator AddPrint(string _message)
         {
             printList.Add(_message);
-            yield return new WaitForSeconds(8.0f);
+            yield return new WaitForSeconds(logTime);
             printList.Remove(_message);
         }
 
         void OnGUI()
         {
-            GUI.color = color;
-
-            // order by newest on top
-            printString = "";
-            for (int i = printList.Count - 1; i >= 0; i--)
-            {
-                printString += printList[i] + "\n";
-            }
-
             if (useUIDebug)
             {
+                GUI.color = color;
+
+                // order by newest on top
+                printString = "";
+                for (int i = printList.Count - 1; i >= 0; i--)
+                {
+                    printString += printList[i] + "\n";
+                }
+
+                // trim string 
+                if (printString.Length > 10000)
+                {
+                    printString = printString.Remove(10000, printString.Length - 10000);
+                }
+                
                 GUI.Label(new Rect(10, 10, Screen.width - 20, Screen.height - 40), printString);
             }
         }

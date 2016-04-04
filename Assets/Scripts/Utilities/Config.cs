@@ -61,18 +61,12 @@ namespace Huffy.Utilities
 
             string line;
             StreamReader inStream;
-
-#if UNITY_EDITOR
+            
             if (!File.Exists(Application.dataPath + "/../Config/config.txt"))
                 File.Create(Application.dataPath + "/../Config/config.txt");
 
             inStream = new StreamReader(Application.dataPath + "/../Config/config.txt");
-#else
-            if (!File.Exists(Application.dataPath + "/../Config/" + "config.txt"))
-                File.Create(Application.dataPath + "/../Config/" + "config.txt");
 
-            inStream = new StreamReader(Application.dataPath + "/../Config/" + "config.txt");
-#endif
             while ((line = inStream.ReadLine()) != null)
             {
                 line = line.Replace(" ", "");
@@ -107,7 +101,7 @@ namespace Huffy.Utilities
             s += "\nOSVersion: " + System.Environment.OSVersion;
 
             s += "\n////////////////////////////////////////////////////////////////////////////////\n";
-            UIDebug.Log(s);
+            Debug.Log(s);
         }
 
         private void DebugQulitySettings()
@@ -127,7 +121,7 @@ namespace Huffy.Utilities
             s += "\nrefreshRate: " + Screen.currentResolution.refreshRate;
 
             s += "\n////////////////////////////////////////////////////////////////////////////////\n";
-            UIDebug.Log(s);
+            Debug.Log(s);
         }
 
         private void ApplyQualitySettings()

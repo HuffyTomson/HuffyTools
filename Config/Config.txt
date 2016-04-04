@@ -2,7 +2,7 @@
 // debug UI
 // true
 // false
-Debug = true
+Debug = false
 
 // number of buffers 0-2
 vsync = 0

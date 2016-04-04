@@ -14,11 +14,7 @@ namespace Huffy.Utilities
 
         public static string ClientAssetPath(string name)
         {
-#if UNITY_EDITOR
             return Application.dataPath + "/../Config/" + name;
-#else
-			return Application.dataPath + "/../Config/" + name;
-#endif
         }
 
         public static Container Load(string name)
@@ -64,7 +60,7 @@ namespace Huffy.Utilities
             s += DebugString();
 
             s += "\n////////////////////////////////////////////////////////////////////////////////\n";
-            UIDebug.Log(s);
+            Debug.Log(s);
         }
     }
 }
