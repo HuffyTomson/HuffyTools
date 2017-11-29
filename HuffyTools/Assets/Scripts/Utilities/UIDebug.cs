@@ -6,6 +6,7 @@ namespace Huffy.Utilities
 {
     public class UIDebug : SingletonBehaviour<UIDebug>
     {
+        public GUIStyle style;
         public static bool useUIDebug = true;
         public bool useStackTrace = true;
         public float logTime = 8;
@@ -17,10 +18,12 @@ namespace Huffy.Utilities
         void Awake()
         {
             DontDestroy();
+            #if !UNITY_IOS && !UNITY_ANDROID
             if (Config.HasKey(CONFIG_KEYS.debug))
             {
                 useUIDebug = bool.Parse(Config.Read(CONFIG_KEYS.debug));
             }
+            #endif
         }
 
         void OnEnable()
@@ -70,7 +73,7 @@ namespace Huffy.Utilities
                     printString = printString.Remove(10000, printString.Length - 10000);
                 }
                 
-                GUI.Label(new Rect(10, 10, Screen.width - 20, Screen.height - 40), printString);
+                GUI.Label(new Rect(10, 10, Screen.width - 20, Screen.height - 40), printString, style);
             }
         }
     }

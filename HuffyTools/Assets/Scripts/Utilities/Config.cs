@@ -51,7 +51,7 @@ namespace Huffy.Utilities
         {
             configData = GetConfigData();
             yield return null;
-            DebugSystemInformation();
+            //DebugSystemInformation();
             ApplyQualitySettings();
         }
 
@@ -178,7 +178,7 @@ namespace Huffy.Utilities
             Screen.SetResolution(width, height, fullScreen, refreshRate);
             
             // debug settings
-            DebugQulitySettings();
+            //DebugQulitySettings();
         }
     }
 }

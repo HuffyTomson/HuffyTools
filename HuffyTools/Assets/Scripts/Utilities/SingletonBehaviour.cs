@@ -36,6 +36,8 @@ namespace Huffy.Utilities
         // the this object is destroyed
         protected void DontDestroy()
         {
+            this.gameObject.transform.SetParent(null);
+
             if (this == Instance)
             {
                 MonoBehaviour.DontDestroyOnLoad(Instance.gameObject);
